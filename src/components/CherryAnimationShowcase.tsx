@@ -112,34 +112,6 @@ export const CherryAnimationShowcase: React.FC<CherryAnimationShowcaseProps> = (
           }
 
           ctx.drawImage(img, drawX, drawY, drawW, drawH);
-
-          // Completely eliminate Google Gemini 4-pointed sparkle watermark from bottom-right corner
-          const starX = drawX + drawW * 0.918;
-          const starY = drawY + drawH * 0.90;
-          const starR = drawW * 0.145;
-          const starCleanGrad = ctx.createRadialGradient(starX, starY, 0, starX, starY, starR);
-          starCleanGrad.addColorStop(0, '#0a0204');
-          starCleanGrad.addColorStop(0.7, '#0a0204');
-          starCleanGrad.addColorStop(1, 'rgba(10, 2, 4, 0)');
-          ctx.fillStyle = starCleanGrad;
-          ctx.beginPath();
-          ctx.arc(starX, starY, starR, 0, Math.PI * 2);
-          ctx.fill();
-
-          // Edge vignette
-          const edgeVignette = ctx.createRadialGradient(
-            w / 2,
-            h * 0.45,
-            Math.min(w, h) * 0.32,
-            w / 2,
-            h * 0.45,
-            Math.max(w, h) * 0.68
-          );
-          edgeVignette.addColorStop(0, 'rgba(10, 2, 4, 0)');
-          edgeVignette.addColorStop(0.7, 'rgba(10, 2, 4, 0.4)');
-          edgeVignette.addColorStop(1, 'rgba(10, 2, 4, 0.95)');
-          ctx.fillStyle = edgeVignette;
-          ctx.fillRect(0, 0, w, h);
         } else {
           ctx.clearRect(0, 0, w, h);
           // Subtle warm cherry gradient while first frame streams

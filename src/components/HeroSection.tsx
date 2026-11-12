@@ -107,34 +107,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       }
 
       ctx.drawImage(frameImg, drawX, drawY, drawW, drawH);
-
-      // Cleanly dissolve the bottom-right watermark region into pure background (#080808)
-      const starX = drawX + drawW * 0.918;
-      const starY = drawY + drawH * 0.90;
-      const starR = drawW * 0.145;
-      const starCleanGrad = ctx.createRadialGradient(starX, starY, 0, starX, starY, starR);
-      starCleanGrad.addColorStop(0, '#080808');
-      starCleanGrad.addColorStop(0.7, '#080808');
-      starCleanGrad.addColorStop(1, 'rgba(8, 8, 8, 0)');
-      ctx.fillStyle = starCleanGrad;
-      ctx.beginPath();
-      ctx.arc(starX, starY, starR, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Edge vignette to dissolve canvas perimeter seamlessly into page background (#080808)
-      const edgeVignette = ctx.createRadialGradient(
-        w / 2,
-        h * 0.45,
-        Math.min(w, h) * 0.32,
-        w / 2,
-        h * 0.45,
-        Math.max(w, h) * 0.68
-      );
-      edgeVignette.addColorStop(0, 'rgba(8, 8, 8, 0)');
-      edgeVignette.addColorStop(0.7, 'rgba(8, 8, 8, 0.4)');
-      edgeVignette.addColorStop(1, 'rgba(8, 8, 8, 0.95)');
-      ctx.fillStyle = edgeVignette;
-      ctx.fillRect(0, 0, w, h);
     } else {
       ctx.clearRect(0, 0, w, h);
       // Background gradient fallback while first frame is ready
@@ -242,15 +214,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           className="absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-300"
         />
 
-        {/* Seamless Edge Blending Overlays */}
+        {/* Seamless Top & Bottom Section Transitions */}
         <div
           className="absolute inset-0 z-[1] pointer-events-none transition-colors duration-700"
           style={{
             background: isDarkMode
-              ? `linear-gradient(to bottom, #080808 0%, transparent 12%, transparent 72%, #080808 100%),
-                 linear-gradient(to right, #080808 0%, transparent 14%, transparent 86%, #080808 100%)`
-              : `linear-gradient(to bottom, #f5f5f5 0%, transparent 12%, transparent 72%, #f5f5f5 100%),
-                 linear-gradient(to right, #f5f5f5 0%, transparent 14%, transparent 86%, #f5f5f5 100%)`
+              ? `linear-gradient(to bottom, #080808 0%, transparent 10%, transparent 92%, #080808 100%)`
+              : `linear-gradient(to bottom, #f5f5f5 0%, transparent 10%, transparent 92%, #f5f5f5 100%)`
           }}
         />
 
